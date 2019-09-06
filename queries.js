@@ -56,5 +56,6 @@ const deleteRecipe = (request, response) => {
 
 module.exports = {
 	getRecipes,
-	createRecipe
+	createRecipe,
+	deleteRecipe
 }
