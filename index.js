@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 var cors = require("cors")
 const app = express()
-const port = 3000
 const db = require('./queries')
 
 
@@ -22,6 +21,6 @@ app.get('/', (request, response) => {
 
 app.get('/recipes', db.getRecipes)
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`)
+app.listen(process.env.PORT || 3002, () => {
+  console.log(`Server listening ${process.env.PORT}`)
 })
