@@ -14,8 +14,27 @@ const getRecipes = (request, response) => {
 			response.status(200).json(results.rows)
 		})
 	}
-
 }
+
+const createRecipes = (request, response) => {
+	if (request.headers.key !== API_KEY) {
+		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
+	} else {
+		const { name, category, ingredients } = request.body;
+		pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(201).send(`Recipe added with ID: ${result.insertId}`)
+  })
+	}
+}
+
+// delete Recipes
+// add Recipes
+// alter Recipes
+// specified get Recipes
+
 
 module.exports = {
 	getRecipes
