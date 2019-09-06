@@ -16,7 +16,7 @@ const getRecipes = (request, response) => {
 	}
 }
 
-const createRecipes = (request, response) => {
+const createRecipe = (request, response) => {
 	if (request.headers.key !== API_KEY) {
 		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
 	} else {
@@ -37,5 +37,6 @@ const createRecipes = (request, response) => {
 
 
 module.exports = {
-	getRecipes
+	getRecipes,
+	createRecipe
 }

@@ -20,6 +20,7 @@ app.get('/', (request, response) => {
 })
 
 app.get('/recipes', db.getRecipes)
+app.post('/createRecipe', db.createRecipe)
 
 app.listen(process.env.PORT || 3002, () => {
   console.log(`Server listening ${process.env.PORT}`)
