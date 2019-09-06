@@ -28,7 +28,7 @@ const createRecipe = (request, response) => {
       throw error;
     }
 		console.log(results);
-    response.status(201).json({'Recipe added!' : 'MARIO'})
+    response.status(201).json(results);
   })
 	}
 }
