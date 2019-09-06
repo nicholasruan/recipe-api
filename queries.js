@@ -27,13 +27,29 @@ const createRecipe = (request, response) => {
       throw error;
     }
 		console.log(results);
-    response.status(201).json({ 'Recipie added yippie!' : request.body});
+    response.status(201).json({ 'Recipie' : request.body});
   })
 	}
 }
 
+const deleteRecipe = (request, response) => {
+	if (request.headers.key !== API_KEY) {
+		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
+	} else {
+		const { name } = request.body;
+		pool.query('DELETE FROM recipes WHERE name = "$1"', [name], (error, results) => {
+    if (error) {
+			console.log(error);
+      throw error;
+    }
+    response.status(201).send('Recipe Deleted');
+  })
+	}
+}
+
+
+
 // delete Recipe
-// add Recipes
 // alter Recipes
 // specified get Recipes
 
