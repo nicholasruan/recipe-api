@@ -37,7 +37,7 @@ const deleteRecipe = (request, response) => {
 		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
 	} else {
 		const { name } = request.body;
-		pool.query(`DELETE FROM recipes WHERE name = "${name}"`, [name], (error, results) => {
+		pool.query(`DELETE FROM recipes WHERE name = '${name}'`, [name], (error, results) => {
     if (error) {
 			console.log(error);
       throw error;
