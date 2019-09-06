@@ -30,7 +30,7 @@ const createRecipe = (request, response) => {
 	}
 }
 
-// delete Recipes
+// delete Recipe
 // add Recipes
 // alter Recipes
 // specified get Recipes
