@@ -21,6 +21,7 @@ const createRecipe = (request, response) => {
 		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
 	} else {
 		const { name, category, ingredients } = request.body;
+		console.log(request.body);
 		pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
     if (error) {
 			console.log(error);
