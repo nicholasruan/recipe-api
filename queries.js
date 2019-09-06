@@ -25,7 +25,7 @@ const createRecipe = (request, response) => {
     if (error) {
       throw error
     }
-    response.status(201).send(`Recipe added with ID: ${result.insertId}`)
+    response.status(201).send(`Recipe added with ID: ${results.insertId}`)
   })
 	}
 }
