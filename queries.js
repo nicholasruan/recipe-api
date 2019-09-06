@@ -27,6 +27,7 @@ const createRecipe = (request, response) => {
 			console.log(error);
       throw error;
     }
+		console.log(results);
     response.status(201).json({`Recipe added!` : results })
   })
 	}
