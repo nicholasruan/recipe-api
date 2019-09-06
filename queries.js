@@ -25,7 +25,7 @@ const createRecipe = (request, response) => {
 		pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
     if (error) {
 			console.log(error);
-      throw error;
+      throw error
     }
     response.status(201).send(`Recipe added`)
   })
