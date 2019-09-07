@@ -23,16 +23,16 @@ const createRecipe = (request, response) => {
 		response.status(500).json({ 'error' : API_ERROR})
 	} else {
 		const { name, category, ingredients } = request.body;
-		if (!name) {
-			response.status(500).json({ 'error' : 'Name cannot be null'})
+		if (!name || !category) {
+			response.status(500).json({ 'error' : 'Name or category cannot be null'})
 		} else {
 			pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
 		    if (error) {
 					console.log(error);
 		      throw error;
 		    }
-				console.log(results);
-		    response.status(201).json({ 'Recipie' : request.body});
+				// console.log(results);
+		    response.status(201).send(results);
 	  	})
 		}
 	}
@@ -112,7 +112,7 @@ const searchCategory = (request, response) => {
 	}
 }
 
-// alter Recipes
+// Update recipes
 
 module.exports = {
 	getRecipes,
