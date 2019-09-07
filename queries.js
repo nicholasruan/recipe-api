@@ -66,22 +66,21 @@ const searchRecipe = (request, response) => {
 	if (request.headers.key !== API_KEY) {
 		response.status(500).json({ 'error' : API_ERROR})
 	} else {
-		const { field, item } = request.body;
-		if (!field || !item) {
-			response.status(500).json({ 'error' : 'Field and item cannot be null'})
+		const { name } = request.body;
+		if (!name) {
+			response.status(500).json({ 'error' : 'Name cannot be null'})
 		} else {
-			pool.query('SELECT * FROM recipes WHERE $1 = $2', [field, item], (error, results) => {
+			pool.query('SELECT * FROM recipes WHERE name = $1', [name], (error, results) => {
 				if (error) {
 					console.log(error);
 		      throw error;
 		    } else {
-					response.status(201).send(results);
+					if (results.rowCount === 0) {
+						response.status(500).json({ 'error' : 'Unable to find recipe'})
+					} else {
+						response.status(201).send(results)
+					}
 				}
-				// if (results.rowCount === 0) {
-				// 	response.status(500).json({ 'error' : 'Unable to find recipe'})
-				// } else {
-
-				// }
 			})
 		}
 	}
