@@ -61,12 +61,35 @@ const deleteRecipe = (request, response) => {
 	}
 }
 
-// alter Recipes
 // specified get Recipes
+const searchRecipe = (request, response) => {
+	if (request.headers.key !== API_KEY) {
+		response.status(500).json({ 'error' : API_ERROR})
+	} else {
+		const { query, item } = request.body;
+		if (!query || !item) {
+			response.status(500).json({ 'error' : 'Query or item cannot be null'})
+		} else {
+			pool.query('SELECT * FROM recipes WHERE $1 = $2', [query, item], (error, results) => {
+				if (error) {
+					console.log(error);
+		      throw error;
+		    }
+				// if (results.rowCount === 0) {
+				// 	response.status(500).json({ 'error' : 'Unable to find recipe'})
+				// } else {
+					response.status(201).send(results);
+				// }
+			})
+		}
+	}
+}
 
+// alter Recipes
 
 module.exports = {
 	getRecipes,
 	createRecipe,
-	deleteRecipe
+	deleteRecipe,
+	searchRecipe
 }
