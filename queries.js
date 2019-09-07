@@ -51,7 +51,11 @@ const deleteRecipe = (request, response) => {
 					console.log(error);
 		      throw error;
 		    }
-		    response.status(201).send(results);
+				if (results.rowCount === 0) {
+					response.status(500).json({ 'error' : 'Unable to find recipe'})
+				} else {
+					response.status(201).send(`Deleted ${results.rowCount} rows`);
+				}
 	  	})
 		}
 	}
