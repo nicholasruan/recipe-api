@@ -16,19 +16,24 @@ const getRecipes = (request, response) => {
 	}
 }
 
+// include error checking to see that the name is not null
 const createRecipe = (request, response) => {
 	if (request.headers.key !== API_KEY) {
 		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
 	} else {
 		const { name, category, ingredients } = request.body;
-		pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
-    if (error) {
-			console.log(error);
-      throw error;
-    }
-		console.log(results);
-    response.status(201).json({ 'Recipie' : request.body});
-  })
+		if (!name) {
+			response.status(500).json({ 'error' : 'Name cannot be null'})
+		} else {
+			pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
+		    if (error) {
+					console.log(error);
+		      throw error;
+		    }
+				console.log(results);
+		    response.status(201).json({ 'Recipie' : request.body});
+	  	})
+		}
 	}
 }
 
@@ -47,9 +52,6 @@ const deleteRecipe = (request, response) => {
 	}
 }
 
-
-
-// delete Recipe
 // alter Recipes
 // specified get Recipes
 
