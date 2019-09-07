@@ -1,11 +1,11 @@
-
 const { pool } = require('./config')
 
 const API_KEY = 'miloislife';
+const API_ERROR = 'API key is incorrect...';
 
 const getRecipes = (request, response) => {
 	if (request.headers.key !== API_KEY) {
-		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
+		response.status(500).json({ 'error' : API_ERROR})
 	} else {
 		pool.query('SELECT * FROM recipes ORDER BY id ASC', (error, results) => {
 			if (error) {
@@ -19,7 +19,7 @@ const getRecipes = (request, response) => {
 // include error checking to see that the name is not null
 const createRecipe = (request, response) => {
 	if (request.headers.key !== API_KEY) {
-		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
+		response.status(500).json({ 'error' : API_ERROR})
 	} else {
 		const { name, category, ingredients } = request.body;
 		if (!name) {
@@ -40,7 +40,7 @@ const createRecipe = (request, response) => {
 // delete recipe
 const deleteRecipe = (request, response) => {
 	if (request.headers.key !== API_KEY) {
-		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
+		response.status(500).json({ 'error' : API_ERROR})
 	} else {
 		const { name } = request.body;
 		if (!name) {
