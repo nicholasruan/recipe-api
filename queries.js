@@ -3,6 +3,7 @@ const { pool } = require('./config')
 const API_KEY = 'miloislife';
 const API_ERROR = 'API key is incorrect...';
 
+// returns all recipes
 const getRecipes = (request, response) => {
 	if (request.headers.key !== API_KEY) {
 		response.status(500).json({ 'error' : API_ERROR})
@@ -61,8 +62,8 @@ const deleteRecipe = (request, response) => {
 	}
 }
 
-// specified get Recipes
-const searchRecipe = (request, response) => {
+// search Name
+const searchName = (request, response) => {
 	if (request.headers.key !== API_KEY) {
 		response.status(500).json({ 'error' : API_ERROR})
 	} else {
@@ -78,7 +79,32 @@ const searchRecipe = (request, response) => {
 					if (results.rowCount === 0) {
 						response.status(500).json({ 'error' : 'Unable to find recipe'})
 					} else {
-						response.status(201).send(results)
+						response.status(201).send(results.rows)
+					}
+				}
+			})
+		}
+	}
+}
+
+// search category
+const searchCategory = (request, response) => {
+	if (request.headers.key !== API_KEY) {
+		response.status(500).json({ 'error' : API_ERROR})
+	} else {
+		const { category } = request.body;
+		if (!category) {
+			response.status(500).json({ 'error' : 'Category cannot be null'})
+		} else {
+			pool.query('SELECT * FROM recipes WHERE category = $1', [category], (error, results) => {
+				if (error) {
+					console.log(error);
+		      throw error;
+		    } else {
+					if (results.rowCount === 0) {
+						response.status(500).json({ 'error' : 'Unable to find recipe'})
+					} else {
+						response.status(201).send(results.rows)
 					}
 				}
 			})
@@ -92,5 +118,6 @@ module.exports = {
 	getRecipes,
 	createRecipe,
 	deleteRecipe,
-	searchRecipe
+	searchCategory,
+	searchName
 }

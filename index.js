@@ -4,7 +4,6 @@ var cors = require("cors")
 const app = express()
 const db = require('./queries')
 
-
 app.use(cors())
 
 app.use(bodyParser.json())
@@ -15,6 +14,7 @@ app.use(
   })
 )
 
+// API Endpoints
 app.get('/', (request, response) => {
   response.json({ info: 'Hello boss, this is the recipe API. Enjoy the feast!' })
 })
@@ -22,7 +22,8 @@ app.get('/', (request, response) => {
 app.get('/recipes', db.getRecipes);
 app.post('/create', db.createRecipe);
 app.delete('/delete', db.deleteRecipe);
-app.get('/search', db.searchRecipe);
+app.get('/searchName', db.searchName);
+app.get('/searchCategory', db.searchCategory);
 
 app.listen(process.env.PORT || 3002, () => {
   console.log(`Server listening ${process.env.PORT}`)
