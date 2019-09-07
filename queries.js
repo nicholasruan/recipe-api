@@ -51,7 +51,7 @@ const deleteRecipe = (request, response) => {
 					console.log(error);
 		      throw error;
 		    }
-		    response.status(201).send('Recipe Deleted');
+		    response.status(201).send(results);
 	  	})
 		}
 	}
