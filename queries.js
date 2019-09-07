@@ -26,7 +26,7 @@ const createRecipe = (request, response) => {
 		if (!name || !category) {
 			response.status(500).json({ 'error' : 'Name or category cannot be null'})
 		} else {
-			pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3)', [name, category, ingredients], (error, results) => {
+			pool.query('INSERT INTO recipes (name, category, ingredients) VALUES ($1, $2, $3) RETURNING name, category, ingredients', [name, category, ingredients], (error, results) => {
 		    if (error) {
 					console.log(error);
 		      throw error;
