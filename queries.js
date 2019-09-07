@@ -31,8 +31,11 @@ const createRecipe = (request, response) => {
 					console.log(error);
 		      throw error;
 		    }
-				// console.log(results);
-		    response.status(201).send(results);
+				if (results.rowCount === 0) {
+					response.status(500).json({ 'error' : 'Unable to add recipe'})
+				} else {
+					response.status(201).json({ 'addedRecipe' : results.rows);
+				}
 	  	})
 		}
 	}
