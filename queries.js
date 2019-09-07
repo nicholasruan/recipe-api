@@ -37,18 +37,23 @@ const createRecipe = (request, response) => {
 	}
 }
 
+// delete recipe
 const deleteRecipe = (request, response) => {
 	if (request.headers.key !== API_KEY) {
 		response.status(500).json({ 'error' : 'MATE! Key value is incorrect...'})
 	} else {
 		const { name } = request.body;
-		pool.query('DELETE FROM recipes WHERE name = $1', [name], (error, results) => {
-    if (error) {
-			console.log(error);
-      throw error;
-    }
-    response.status(201).send('Recipe Deleted');
-  })
+		if (!name) {
+			response.status(500).json({ 'error' : 'Name cannot be null'})
+		} else {
+			pool.query('DELETE FROM recipes WHERE name = $1', [name], (error, results) => {
+		    if (error) {
+					console.log(error);
+		      throw error;
+		    }
+		    response.status(201).send('Recipe Deleted');
+	  	})
+		}
 	}
 }
 
