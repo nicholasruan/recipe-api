@@ -1,6 +1,6 @@
 const { pool } = require('./config')
 
-const API_KEY = 'miloislife';
+const API_KEY = 'miloislife'; // change this to env variable
 const API_ERROR = 'API key is incorrect...';
 
 // returns all recipes
@@ -115,7 +115,7 @@ const searchCategory = (request, response) => {
 	}
 }
 
-// Update recipes
+// TODO: Update recipes UPDATE recipes SET category = 'dessert' WHERE name = 'cake';
 
 module.exports = {
 	getRecipes,
