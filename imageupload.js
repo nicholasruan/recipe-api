@@ -1,10 +1,10 @@
-// route/api/profile.js
 const express = require( 'express' );
 const aws = require( 'aws-sdk' );
 const multerS3 = require( 'multer-s3' );
 const multer = require('multer');
 const path = require( 'path' );
 const url = require('url');
+const API_KEY = process.env.API_KEY;
 
 const router = express.Router();
 
@@ -41,6 +41,9 @@ if( mimetype && extname ){
 }
 
 router.post( '/img-upload', ( req, res ) => {
+	if (req.headers.key !== API_KEY) {
+		res.status(500).json({ 'error' : API_ERROR})
+	} else {
 		profileImgUpload( req, res, ( error ) => {
 		  if( error ){
 		   console.log( 'errors', error );
@@ -60,7 +63,8 @@ router.post( '/img-upload', ( req, res ) => {
 
 		   }
 		  }
-		 });
+		});
+	}
 });
 
 module.exports = router;

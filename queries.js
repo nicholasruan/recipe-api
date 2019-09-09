@@ -1,6 +1,6 @@
 const { pool } = require('./config')
 
-const API_KEY = 'miloislife'; // change this to env variable
+const API_KEY = process.env.API_KEY; // change this to env variable
 const API_ERROR = 'API key is incorrect...';
 
 // returns all recipes
