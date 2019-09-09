@@ -38,6 +38,7 @@
          let fileName = response.data;
          console.log('fileName', fileName );
          console.log('file uploaded');
+         alert('image succesfully uploaded')
          document.getElementById('result').innerHTML =
          `
           <img src='${fileName.location}' height="300px"/>

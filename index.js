@@ -11,6 +11,7 @@ app.engine('html', require('ejs').renderFile);
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static("./public"));
 
 // render display page
 app.get('/imguploadtest', (req, res) => res.render('imgupload.html'));
@@ -30,6 +31,8 @@ app.post('/api/create', db.createRecipe);
 app.delete('/api/delete', db.deleteRecipe);
 app.get('/api/searchName', db.searchName);
 app.get('/api/searchCategory', db.searchCategory);
+
+// TODO UPDATE RECIPE
 
 app.listen(process.env.PORT || 3002, () => {
 	if (process.env.PORT) {
