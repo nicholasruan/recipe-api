@@ -1,0 +1,56 @@
+<html>
+  <body>
+		<p id="status">Please select a file</p>
+    <input type="file" id="file-input" enctype="multipart/form-data" name='profileImage' onchange="imageUpload()">
+
+    <div id="result">
+    </div>
+
+  </body>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+
+
+  function imageUpload() {
+    const selectedFile = document.getElementById('file-input').files[0];
+    const data = new FormData();
+  // If file selected
+    if ( selectedFile ) {
+  data.append( 'profileImage', selectedFile, selectedFile.name );
+  axios.post( '/api/img-upload', data, {
+      headers: {
+       'accept': 'application/json',
+       'Accept-Language': 'en-US,en;q=0.8',
+       'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+      }
+     })
+      .then( ( response ) => {
+  if ( 200 === response.status ) {
+        // If file size is larger than expected.
+        if( response.data.error ) {
+         if ( 'LIMIT_FILE_SIZE' === response.data.error.code ) {
+          console.log('Max size: 2MB');
+         } else {
+          console.log( response.data );
+         }
+        } else {
+         // Success
+         let fileName = response.data;
+         console.log('fileName', fileName );
+         console.log('file uploaded');
+         document.getElementById('result').innerHTML =
+         `
+          <img src='${fileName.location}' height="300px"/>
+         `
+        }
+       }
+      }).catch( ( error ) => {
+      // If another error
+      console.log(error);
+     });
+    } else {
+     console.log('Please upload file');
+    }
+  };
+	</script>
+</html>
