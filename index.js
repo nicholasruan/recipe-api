@@ -15,6 +15,9 @@ app.use(bodyParser.json());
 // render display page
 app.get('/imguploadtest', (req, res) => res.render('imgupload.html'));
 
+// render homepage
+app.get('/', (req, res) => res.render('index.html'));
+
 // API Endpoints
 app.get('/api', (request, response) => {
   response.json({ info: 'Hello boss, this is the recipe API. Enjoy the feast!' })
