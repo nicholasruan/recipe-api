@@ -25,6 +25,5 @@ npm start
 ```
 
 ## License
-A short snippet describing the license (MIT, Apache etc)
 
 MIT © Nicholas Ruan()
